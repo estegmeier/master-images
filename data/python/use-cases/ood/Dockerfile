@@ -22,16 +22,17 @@ RUN git clone https://github.com/DFrolova/PatchCore3D.git PatchCore3D && \
 
 RUN mkdir -p PatchCore3D/src/model && \
     gdown "https://drive.google.com/uc?id=1BmDC4USdZmX0ZSi-jQyUVmKHaDFIJFo2" \
-    -O PatchCore3D/src/model/DenseNet_HCP_IXI_window-0.25_0_epoch_30.pth
+    -O PatchCore3D/src/model/DenseNet_HCP_IXI_window-0.25_0_epoch_30.pth && \
+    chmod a+r PatchCore3D/src/model/DenseNet_HCP_IXI_window-0.25_0_epoch_30.pth
 
 COPY dimensions.patch PatchCore3D/dimensions.patch
 
 RUN git -C PatchCore3D apply dimensions.patch
 
-RUN pip3 install --no-deps ./PatchCore3D
+RUN pip3 install --no-cache-dir --no-deps ./PatchCore3D
 
 COPY requirements.txt /tmp/requirements.txt
 
-RUN pip3 install -r /tmp/requirements.txt
+RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
 
-RUN pip3 install git+https://github.com/PrivateAIM/python-sdk-patterns.git@1.2.1
+RUN pip3 install --no-cache-dir git+https://github.com/PrivateAIM/python-sdk-patterns.git@1.2.1
